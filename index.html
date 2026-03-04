@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>method●pilates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #f7f3ee;
+      --sand:    #e8ddd0;
+      --warm:    #c9b49a;
+      --terra:   #a07850;
+      --bark:    #5c3d2e;
+      --sage:    #8a9e8c;
+      --text:    #3a2e27;
+      --muted:   #7a6a5a;
+      --serif:   'Cormorant Garamond', Georgia, serif;
+      --sans:    'Jost', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 3rem;
+      background: rgba(247, 243, 238, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(160, 120, 80, 0.15);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(92, 61, 46, 0.08); }
+    .nav-logo {
+      font-family: var(--sans);
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--bark);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--terra); }
+    .nav-cta {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--terra);
+      color: #fff;
+      padding: 0.6rem 1.4rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--bark); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 72px;
+    }
+    .hero-text {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6rem 4rem 6rem 6rem;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--bark);
+      margin-bottom: 1.5rem;
+    }
+    .hero-title em { font-style: italic; color: var(--terra); }
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--terra);
+      color: #fff;
+      padding: 0.85rem 2rem;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: none; border-radius: 2px;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--bark); }
+    .btn-outline {
+      color: var(--terra);
+      padding: 0.85rem 2rem;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1.5px solid var(--warm);
+      border-radius: 2px;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--terra); background: rgba(160,120,80,0.06); }
+
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+      background: var(--sand);
+    }
+    .hero-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.9;
+      transition: transform 6s ease;
+    }
+    .hero-image:hover img { transform: scale(1.03); }
+    .hero-image-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(92,61,46,0.12) 0%, transparent 60%);
+    }
+    .hero-badge {
+      position: absolute; bottom: 2.5rem; left: 2.5rem;
+      background: rgba(247, 243, 238, 0.92);
+      backdrop-filter: blur(6px);
+      padding: 1rem 1.4rem;
+      border-left: 3px solid var(--terra);
+    }
+    .hero-badge p { font-size: 0.75rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+    .hero-badge strong { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; color: var(--bark); display: block; }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 7rem 6rem; }
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 300;
+      color: var(--bark);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    .section-title em { font-style: italic; }
+    .divider {
+      width: 48px; height: 1px;
+      background: var(--warm);
+      margin: 1.5rem 0 2rem;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      padding: 7rem 6rem;
+    }
+    .about-image-wrap { position: relative; }
+    .about-image-wrap img {
+      width: 100%; aspect-ratio: 4/5;
+      object-fit: cover; display: block;
+    }
+    .about-image-accent {
+      position: absolute;
+      top: -1.5rem; right: -1.5rem;
+      width: 60%; aspect-ratio: 1;
+      border: 2px solid var(--warm);
+      z-index: -1;
+    }
+    .about-quals {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 2rem;
+    }
+    .qual-tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      padding: 0.35rem 0.8rem;
+      background: rgba(160,120,80,0.12);
+      color: var(--terra);
+      border-radius: 1px;
+    }
+
+    /* ── SERVICES ── */
+    #services { background: var(--cream); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--warm);
+      margin-top: 3rem;
+    }
+    .service-card {
+      background: var(--cream);
+      padding: 2.5rem;
+      transition: background 0.25s;
+    }
+    .service-card:hover { background: #faf7f3; }
+    .service-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .service-name {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--bark);
+      margin-bottom: 0.5rem;
+    }
+    .service-price {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--terra);
+      margin-bottom: 0.8rem;
+    }
+    .service-price span { font-size: 0.8rem; font-weight: 300; color: var(--muted); }
+    .service-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── BOOKING ── */
+    #booking {
+      background: var(--bark);
+      color: var(--cream);
+      text-align: center;
+      padding: 7rem 4rem;
+    }
+    #booking .section-label { color: var(--warm); }
+    #booking .section-title { color: var(--cream); }
+    #booking .divider { background: var(--warm); margin-left: auto; margin-right: auto; }
+    .booking-intro { max-width: 560px; margin: 0 auto 3rem; color: rgba(247,243,238,0.75); font-size: 1rem; line-height: 1.8; }
+    .calendly-placeholder {
+      max-width: 900px; margin: 0 auto;
+      background: rgba(247,243,238,0.08);
+      border: 1px solid rgba(201,180,154,0.25);
+      border-radius: 2px;
+      padding: 4rem 2rem;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    }
+    .calendly-placeholder p { color: var(--warm); font-size: 0.85rem; letter-spacing: 0.08em; }
+    .calendly-placeholder code { font-size: 0.78rem; background: rgba(255,255,255,0.08); padding: 0.2rem 0.6rem; border-radius: 2px; color: var(--sand); }
+
+    /* ── GALLERY ── */
+    #gallery { background: var(--sand); padding: 7rem 6rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 0.8rem;
+      margin-top: 3rem;
+    }
+    .gallery-grid .g-main {
+      grid-column: 1 / 3;
+      grid-row: 1 / 3;
+    }
+    .gallery-item {
+      overflow: hidden;
+      background: var(--warm);
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease, opacity 0.3s;
+      opacity: 0.88;
+    }
+    .gallery-item:hover img { transform: scale(1.04); opacity: 1; }
+    .g-main { min-height: 480px; }
+    .gallery-item:not(.g-main) { min-height: 230px; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--cream); }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .testimonial-card {
+      padding: 2.5rem;
+      border: 1px solid var(--sand);
+      border-top: 3px solid var(--warm);
+      transition: border-top-color 0.2s;
+    }
+    .testimonial-card:hover { border-top-color: var(--terra); }
+    .quote-mark {
+      font-family: var(--serif);
+      font-size: 4rem;
+      line-height: 0.8;
+      color: var(--warm);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .testimonial-text {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .testimonial-author {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--terra);
+    }
+    .stars { color: var(--terra); font-size: 0.85rem; margin-bottom: 0.8rem; }
+
+    /* ── SCREENING ── */
+    #screening {
+      background: #f0ece6;
+      padding: 7rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+    .screening-info h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--bark);
+      margin: 1.5rem 0 0.5rem;
+    }
+    .screening-info p { font-size: 0.9rem; color: var(--muted); }
+    .screening-form-wrap {
+      background: var(--cream);
+      padding: 0.5rem;
+      border: 1px solid var(--sand);
+    }
+    .google-form-placeholder {
+      padding: 3rem 2rem;
+      text-align: center;
+      display: flex; flex-direction: column; gap: 0.8rem; align-items: center;
+    }
+    .google-form-placeholder p { color: var(--muted); font-size: 0.85rem; }
+    .google-form-placeholder code { font-size: 0.78rem; background: var(--sand); padding: 0.2rem 0.6rem; border-radius: 2px; color: var(--terra); }
+
+    /* ── FAQ ── */
+    #faq { background: var(--cream); }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 5rem;
+      margin-top: 3rem;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--sand);
+      padding: 1.5rem 0;
+    }
+    .faq-q {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--bark);
+      cursor: pointer;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 1rem;
+    }
+    .faq-q::after {
+      content: '+';
+      font-family: var(--sans);
+      font-size: 1.2rem;
+      color: var(--terra);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+      display: none;
+      padding-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      padding: 7rem 6rem;
+    }
+    .contact-details { margin-top: 2rem; }
+    .contact-row {
+      display: flex; align-items: flex-start; gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .contact-icon { font-size: 1.1rem; color: var(--terra); width: 24px; flex-shrink: 0; margin-top: 2px; }
+    .contact-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.2rem; }
+    .contact-value { font-size: 0.95rem; color: var(--text); }
+    .contact-value a { color: var(--terra); text-decoration: none; }
+    .contact-value a:hover { text-decoration: underline; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .form-group input, .form-group textarea, .form-group select {
+      background: var(--cream);
+      border: 1px solid var(--warm);
+      padding: 0.75rem 1rem;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      color: var(--text);
+      border-radius: 1px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--terra); }
+    .form-group textarea { min-height: 120px; resize: vertical; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bark);
+      color: rgba(247,243,238,0.6);
+      padding: 3rem 6rem;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--cream);
+    }
+    .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-links a { color: rgba(247,243,238,0.5); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.08em; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--warm); }
+    .footer-copy { font-size: 0.78rem; }
+    .social-links { display: flex; gap: 1rem; }
+    .social-links a {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(201,180,154,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--warm); font-size: 0.85rem;
+      text-decoration: none; border-radius: 1px;
+      transition: all 0.2s;
+    }
+    .social-links a:hover { background: rgba(201,180,154,0.15); border-color: var(--warm); }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      section, #about, #screening, #contact, footer { padding-left: 3rem; padding-right: 3rem; }
+      nav { padding-left: 2rem; padding-right: 2rem; }
+      .hero-text { padding: 4rem 3rem; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid .g-main { grid-column: 1; grid-row: 1; }
+      .faq-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-text { padding: 3rem 2rem; }
+      .hero-image { min-height: 55vw; }
+      #about, #screening, #contact { grid-template-columns: 1fr; gap: 3rem; }
+      section, #about, #screening, #contact { padding: 5rem 2rem; }
+      footer { padding: 2rem; flex-direction: column; text-align: center; }
+      .services-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">METHOD<span style="color:#5a8a2a;margin:0 0.1em;">●</span>PILATES</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#faq">FAQs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">Book Now</a>
+</nav>
+
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-text fade-up">
+    <p class="hero-eyebrow">Private Pilates · Compton, West Berkshire</p>
+    <h1 class="hero-title">When your body works,<br><em>everything works.</em></h1>
+    <p class="hero-sub">One-to-one Pilates sessions from a private home studio in Compton, West Berkshire.</p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-primary">Book a Session</a>
+      <a href="#about" class="btn-outline">Learn More</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <!-- Replace src with your hero image -->
+    <img src="P1030115.JPG" alt="Emma teaching a Pilates session" />
+    <div class="hero-image-overlay"></div>
+    <div class="hero-badge">
+      <p>Qualified Instructor</p>
+      <strong>STOTT &amp; Mat Pilates Certified</strong>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="about-image-wrap fade-up">
+    <!-- Replace src with your portrait photo -->
+    <img src="EWCB-41.JPG" alt="Emma, Method Pilates instructor" />
+    <div class="about-image-accent"></div>
+  </div>
+  <div class="fade-up">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">A practice built around <em>you</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--muted); margin-bottom:1rem;">Hi, I'm Emma. I have been teaching Pilates for 20 years, qualifying as an instructor with Stott Pilates in 2005. I later spent five years working and training at a classical Pilates studio in Reading, and my ongoing training has equipped me to work with people with specific needs — including ante and post-natal clients, those recovering from injury, and people coping with chronic illness.</p>
+    <p style="color:var(--muted); margin-bottom:1.5rem;">From 2015 to 2018 I taught the First Team and Under 21s at Reading Football Club — a valuable experience where I was able to use Pilates for both injury prevention and rehabilitation.</p>
+    <p style="color:var(--muted); margin-bottom:2rem;">No matter what you already know — or don't know! — about Pilates, I'm here to help.</p>
+    <figure style="margin-bottom:2rem;">
+      <img src="joseph-pilates-exercises-1.JPG" alt="Joseph Pilates exercise reference photographs" style="width:100%; display:block; filter:grayscale(20%);" />
+      <figcaption style="font-size:0.72rem; letter-spacing:0.08em; color:var(--terra); margin-top:0.6rem; text-transform:uppercase;">Joseph Pilates — the original method</figcaption>
+    </figure>
+    <div class="about-quals">
+      <span class="qual-tag">Stott Pilates Certified</span>
+      <span class="qual-tag">Classical Pilates</span>
+      <span class="qual-tag">Ante &amp; Post-natal</span>
+      <span class="qual-tag">Injury Rehabilitation</span>
+      <span class="qual-tag">Chronic Illness</span>
+      <span class="qual-tag">20 Years Experience</span>
+      <span class="qual-tag">Reading FC 2015–2018</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── SERVICES ── -->
+<section id="services">
+  <div style="text-align:center;" class="fade-up">
+    <p class="section-label">Services &amp; Pricing</p>
+    <h2 class="section-title">What I offer</h2>
+    <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+    <p style="color:var(--muted); max-width:520px; margin:0 auto 1rem;">All sessions are private, one-to-one, and held in my home studio. Sessions use a range of equipment depending on your needs.</p>
+  </div>
+  <div class="services-grid fade-up">
+    <div class="service-card">
+      <span class="service-icon">🌱</span>
+      <div class="service-name">Introductory Session</div>
+      <div class="service-price">£55 <span>/ 55 min</span></div>
+      <p class="service-desc">Your first session includes a full movement assessment and postural review so I can understand your body and goals before we begin. Ideal if you're new to Pilates or returning after a break.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">◯</span>
+      <div class="service-name">Single Session</div>
+      <div class="service-price">£55 <span>/ 55 min</span></div>
+      <p class="service-desc">A fully tailored one-to-one session. Each class builds on the last, addressing your specific goals — whether that's core strength, flexibility, posture, or recovery.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">✦</span>
+      <div class="service-name">Block of 5</div>
+      <div class="service-price">£250 <span>/ 5 sessions</span></div>
+      <p class="service-desc">Save £25 when you commit to five sessions. The best way to build consistency, deepen your practice, and start seeing and feeling real results. Sessions valid for 3 months.</p>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:1.5rem; font-size:0.85rem; color:var(--muted);">
+    Sessions available Monday–Friday. Weekend availability upon request. Please complete the <a href="#screening" style="color:var(--terra);">health screening form</a> before your first booking.
+  </p>
+</section>
+
+
+<!-- ── BOOKING ── -->
+<section id="booking">
+  <p class="section-label">Book Online</p>
+  <h2 class="section-title">Check availability &amp;<br>reserve your session</h2>
+  <div class="divider"></div>
+  <p class="booking-intro">Choose a time that suits you directly from my calendar. Once booked, you'll receive a confirmation email with everything you need to know before your session.</p>
+
+  <!-- Calendly inline widget begin -->
+  <div class="calendly-inline-widget" data-url="https://calendly.com/methodpilates/pilates-class" style="min-width:320px;height:700px;width:100%;"></div>
+  <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <!-- Calendly inline widget end -->
+</section>
+
+
+<!-- ── GALLERY ── -->
+<section id="gallery">
+  <div class="fade-up">
+    <p class="section-label">The Studio</p>
+    <h2 class="section-title">A calm space made for <em>you</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--muted); max-width:480px;">A private, welcoming home studio in the heart of Compton. Warm, quiet, and fully equipped — so you can focus entirely on your practice.</p>
+  </div>
+  <div class="gallery-grid fade-up">
+    <!-- Replace all src values with your own studio/practice photos -->
+    <div class="gallery-item g-main">
+      <img src="P1030070.JPG" alt="Pilates reformer detail" />
+    </div>
+    <div class="gallery-item">
+      <img src="P1020945.jpg" alt="Pilates session in the studio" />
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=500&q=80" alt="Reformer pilates" />
+    </div>
+    <div class="gallery-item">
+      <img src="P1030115.JPG" alt="Emma teaching a Pilates session" />
+    </div>
+    <div class="gallery-item">
+      <img src="EWCB-41.JPG" alt="Emma, Method Pilates instructor" />
+    </div>
+  </div>
+</section>
+
+
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials">
+  <div style="text-align:center;" class="fade-up">
+    <p class="section-label">Testimonials</p>
+    <h2 class="section-title">What clients say</h2>
+    <div class="divider" style="margin-left:auto;margin-right:auto;"></div>
+  </div>
+  <div class="testimonials-grid fade-up">
+    <div class="testimonial-card">
+      <span class="quote-mark">"</span>
+      <p class="testimonial-text">You have put me in touch with my body in a positive way; one that impacts me on a daily basis. As a result of your classes I feel longer, leaner and slightly more sane! Our Friday sessions are about more than exercise for me — they're good for the soul.</p>
+      <p class="testimonial-author">— Toni</p>
+    </div>
+    <div class="testimonial-card">
+      <span class="quote-mark">"</span>
+      <p class="testimonial-text">I am very lucky to have found such a knowledgeable local Pilates teacher who really understands how our bodies work. Through Emma's sessions I have gained core strength, flexibility and coordination — and have even gained ½ inch in height!</p>
+      <p class="testimonial-author">— Sandra</p>
+    </div>
+    <div class="testimonial-card">
+      <span class="quote-mark">"</span>
+      <p class="testimonial-text">Through her use of Pilates, Emma has provided the professional players at Reading FC with fantastic support. Her work has had a positive effect on both the recovery of injuries and within our injury prevention programme.</p>
+      <p class="testimonial-author">— Luke Anthony, Injury Prevention Specialist, Reading FC</p>
+    </div>
+    <div class="testimonial-card">
+      <span class="quote-mark">"</span>
+      <p class="testimonial-text">I've seen a real improvement in my core stability and fitness since attending Emma's classes. I always found the classes to be enjoyable whilst still testing and would recommend them to anyone looking to take up Pilates.</p>
+      <p class="testimonial-author">— Paul McShane, Reading FC &amp; Ireland International</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── SCREENING ── -->
+<section id="screening">
+  <div class="screening-info fade-up">
+    <p class="section-label">New Clients</p>
+    <h2 class="section-title">Health &amp; lifestyle <em>screening</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--muted);">Before your first session I ask all new clients to complete a short health screening form. This helps me understand your medical history, any areas of concern, and what you're hoping to achieve — so I can tailor your first session safely and effectively.</p>
+    <h3>Why do I need to fill this in?</h3>
+    <p>It helps me plan the safest and most effective session for you. Certain medical conditions or recent injuries may affect how we approach your practice.</p>
+    <h3>Is it confidential?</h3>
+    <p>Completely. Your information is used solely to inform your sessions and is never shared with third parties.</p>
+    <h3>When should I complete it?</h3>
+    <p>Please complete the form before booking your first session. It only takes about 5 minutes.</p>
+  </div>
+  <div class="screening-form-wrap fade-up">
+    <!-- GOOGLE FORM EMBED — Replace with your Google Form embed snippet -->
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfJmIJMw0FBb805MZWEyIVhR41OXhiuPFbpKO2SwoPB8fzDGw/viewform?embedded=true" width="100%" height="2043" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    <!-- END GOOGLE FORM EMBED -->
+  </div>
+</section>
+
+
+<!-- ── FAQ ── -->
+<section id="faq">
+  <div class="fade-up">
+    <p class="section-label">FAQ</p>
+    <h2 class="section-title">Common questions</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="faq-grid fade-up">
+    <div class="faq-item">
+      <div class="faq-q">What is Pilates?</div>
+      <div class="faq-a">Pilates is a form of exercise that focuses on breathing, core conditioning and quality of movement. It is a safe and highly effective way to stretch, strengthen and streamline your body without building bulk or stressing your joints. Pilates will help you to use your body fully — the exercises are a great complement to sport, recovery from injury and everyday life.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Who can take part?</div>
+      <div class="faq-a">Pilates is for anyone, whatever your age or level of fitness! From elite athletes to those with injuries or chronic illnesses — as well as people who just want to feel fitter — many men and women have discovered the benefits of Pilates.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I have an injury?</div>
+      <div class="faq-a">If you are attending an in-person lesson, I will take a full history so that I can teach you safely and effectively. Sometimes I will ask your physiotherapist, doctor or osteopath for more information or a treatment plan before you attend a lesson.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How will I feel?</div>
+      <div class="faq-a">Pilates engages the mind as well as the body. It will help improve concentration skills, co-ordination and strength. Pilates targets the deep postural muscles, building strength from the inside out, and can help prevent injury by rebalancing the body and bringing it into correct alignment.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I am pregnant?</div>
+      <div class="faq-a">Let me know and I will tailor the exercises to take you safely through your pregnancy. Pilates can help you to manage your pregnancy and birth both physically and mentally.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What should I wear?</div>
+      <div class="faq-a">Please wear something that is comfortable and relatively fitted. Grip socks or bare feet are best although you can wear warm socks at the start of the session.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What's your cancellation policy?</div>
+      <div class="faq-a">If you can't attend a session and are able to give 24 hours' notice of the cancellation, there is no charge. If you do not give 24 hours' notice you will be charged the full fee.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I pay?</div>
+      <div class="faq-a">Payment is due before or at the time of your session. I accept bank transfer (BACS), PayPal, and cash. Block bookings must be paid in full to secure the discount.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="fade-up">
+    <p class="section-label">Get In Touch</p>
+    <h2 class="section-title">Any questions? <em>I'd love to hear from you.</em></h2>
+    <div class="divider"></div>
+    <p style="color:var(--muted); margin-bottom:2rem;">If you'd like to chat before booking, have a question not answered in the FAQs, or just want to say hello — please get in touch.</p>
+    <div class="contact-details">
+      <div class="contact-row">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Location</div>
+          <div class="contact-value">Compton, West Berkshire</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">✉</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-value"><a href="/cdn-cgi/l/email-protection#87eae2f3efe8e3f7eeebe6f3e2f4c7eee4ebe8f2e3a9e4e8ea"><span class="__cf_email__" data-cfemail="6d0008190502091d04010c19081e2d040e01021809430e0200">[email&#160;protected]</span></a></div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-value"><a href="tel:07790614901">07790 614901</a></div>
+        </div>
+      </div>
+
+      <div class="contact-row">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-label">Studio Hours</div>
+          <div class="contact-value">Monday – Friday, 8:30am – 6pm</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fade-up">
+    <form class="contact-form" onsubmit="handleContact(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Jane" required />
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Smith" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="jane@example.com" required />
+      </div>
+      <div class="form-group">
+        <label>How can I help?</label>
+        <select>
+          <option value="">Select a topic…</option>
+          <option>General enquiry</option>
+          <option>Pricing &amp; availability</option>
+          <option>New client question</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell me a bit about yourself and what you're looking for…"></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Send Message</button>
+      <p id="form-success" style="display:none; color:var(--sage); font-size:0.85rem; margin-top:0.5rem;">✓ Thank you! I'll be in touch soon.</p>
+    </form>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo"><img src="method_pilates_logo.png" alt="Method Pilates" style="height:28px;width:auto;display:block;filter:brightness(0) invert(1);opacity:0.85;" /></div>
+  <nav class="footer-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#booking">Book</a>
+    <a href="#screening">New Clients</a>
+    <a href="#faq">FAQs</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <p class="footer-copy">© 2025 Method Pilates. All rights reserved.</p>
+</footer>
+
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Nav shadow on scroll
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Contact form feedback
+  function handleContact(e) {
+    e.preventDefault();
+    document.getElementById('form-success').style.display = 'block';
+    e.target.reset();
+  }
+</script>
+
+<!-- 
+  ═══════════════════════════════════════════════
+  CALENDLY SETUP INSTRUCTIONS
+  ═══════════════════════════════════════════════
+  1. Sign up at calendly.com (free)
+  2. Create an event type called "Pilates Session"
+  3. Connect your Google Calendar
+  4. Set your availability
+  5. Go to Share > Add to Website > Inline Embed
+  6. Copy the <div> and <script> tags
+  7. Replace the .calendly-placeholder div above with the <div>
+  8. Paste the <script> tag just before </body>
+  ═══════════════════════════════════════════════
+
+  GOOGLE FORM SETUP INSTRUCTIONS
+  ═══════════════════════════════════════════════
+  1. Go to forms.google.com
+  2. Create your health screening form
+  3. Click Send > Embed (the < > icon)
+  4. Copy the <iframe> code
+  5. Replace the .google-form-placeholder div with the <iframe>
+  ═══════════════════════════════════════════════
+
+  GITHUB PAGES DEPLOYMENT
+  ═══════════════════════════════════════════════
+  1. Create a free account at github.com
+  2. Create a new repository called "pilates-site" (or her business name)
+  3. Up
