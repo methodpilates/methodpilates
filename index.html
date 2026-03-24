@@ -289,15 +289,24 @@
     #gallery { background: var(--sand); padding: 7rem 6rem; }
     .gallery-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr;
-      grid-template-rows: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
       gap: 0.8rem;
       margin-top: 3rem;
     }
-    .gallery-grid .g-main {
-      grid-column: 1;
-      grid-row: 1 / 4;
+    .gallery-grid .g-wide {
+      grid-column: 1 / 3;
     }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease, opacity 0.3s;
+      opacity: 0.88;
+    }
+    .gallery-item:hover img { transform: scale(1.04); opacity: 1; }
+    .g-wide { min-height: 380px; }
+    .gallery-item:not(.g-wide) { min-height: 300px; }
     .gallery-item {
       overflow: hidden;
       background: var(--warm);
@@ -628,7 +637,7 @@
   <div class="divider"></div>
   <p class="booking-intro">To book a session or find out more, please get in touch by email or phone and I'll get back to you as soon as possible.</p>
   <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
-    <a href="mailto:methodpilates@icloud.com" class="btn-primary">Email Me</a>
+    <a href="/cdn-cgi/l/email-protection#ee838b9a86818a9e87828f9a8b9dae878d82819b8ac08d8183" class="btn-primary">Email Me</a>
     <a href="tel:07790614901" class="btn-outline" style="color:var(--warm); border-color:var(--warm);">07790 614901</a>
   </div>
 </section>
@@ -643,14 +652,17 @@
     <p style="color:var(--muted); max-width:480px;">A private, welcoming home studio in the heart of Compton. Warm, quiet, and fully equipped — so you can focus entirely on your practice.</p>
   </div>
   <div class="gallery-grid fade-up">
-    <div class="gallery-item g-main">
+    <div class="gallery-item g-wide">
+      <img src="IMG_9371.jpg" alt="Method Pilates studio" />
+    </div>
+    <div class="gallery-item">
       <img src="P1030070.JPG" alt="Pilates reformer detail" />
     </div>
     <div class="gallery-item">
       <img src="P1020945.jpg" alt="Pilates session in the studio" />
     </div>
     <div class="gallery-item">
-      <img src="IMG_9371.jpg" alt="Method Pilates studio" />
+      <img src="P1030115.JPG" alt="Emma teaching a Pilates session" />
     </div>
     <div class="gallery-item">
       <img src="P1020998.JPG" alt="Emma guiding a client" />
@@ -859,7 +871,7 @@
 </footer>
 
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Nav shadow on scroll
   const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => {
@@ -919,7 +931,4 @@
   ═══════════════════════════════════════════════
 
   GITHUB PAGES DEPLOYMENT
-  ═══════════════════════════════════════════════
-  1. Create a free account at github.com
-  2. Create a new repository called "pilates-site" (or her business name)
-  3. Up
+  ════════════════════════════════════�
